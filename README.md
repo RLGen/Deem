@@ -123,7 +123,7 @@ For example, if you want to train image datasets, you can use `--gen resnet`.
 >
 > > --s [0.0-1.0(float)]
 
-For example, if you want to select different coreset size, you can use `--s`.
+For example, if you want to select different coreset size, you can use `--s 0.1`.
 
 
 > &tau; is a threshold for e'/e which can be added in train data, e.g, 0.3 .
