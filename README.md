@@ -1,8 +1,7 @@
 <div align= "center">
-    <h1> LakeBench: A Benchmark for Discovering Joinable and Unionable Tables in Data Lakes</h1>
+    <h1> Two Birds with One Stone: Efficient Deep Learning over Mislabeled Data through Subset Selection</h1>
 </div>
 <p align="center">
-  <a href="#-community">Community</a> •
   <a href="#-struct">Folder Structure</a> •
   <a href="#-getstart">GettingStart</a> •
   <a href="#-quickstart">QuickStart</a> •
@@ -26,20 +25,6 @@
   LakeBench consists of over 16 million real tables **–1,600X** larger than existing data lakes, from multiple sources, with an overall size larger than 1TB (**100X** larger). LakeBench contains both synthesized and real queries, in total more than 10 thousand queries –**10X** more than existing benchmarks, for join and union search respectively. 
 
 🙌  With LakeBench, we thoroughly evaluate the state-of-the-art *table discovery* approaches on our benchmark and present our experimental findings from diverse perspectives, which we believe can push the research of *table discovery*.
-
-<span id="-community"></span>
-
-## 👫 Community
-
-We deeply appreciate the invaluable effort contributed by our dedicated team of developers, supportive users, and esteemed industry partners.
-
-- [Massachusetts Institute of Technology](https://www.mit.edu/)
-- [Beijing Institute of Technology](https://english.bit.edu.cn/)
-- [Hong Kong University of Science and Technology](https://www.hkust-gz.edu.cn/)
-- [Apache Flink](https://flink.apache.org/)
-- [Intel](https://www.intel.com/)
-
-<span id="-struct"></span>
 
 ## 📧 Folder Structure
 
