@@ -18,13 +18,13 @@
 </div>
 <br>
 
-🌊  Deem is a large-scale benchmark designed to test the mettle of *table discovery* methods on a much larger scale, providing a more comprehensive and realistic evaluation platform for the field, including *finance, retail, manufacturing, energy, media, and more.*
+🌊  This repo contains the codes for our submitted paper. Deem is a novel data-efficient framework that selects a subset of representative training instances under label uncertainty. The key idea is to leverage the metadata produced during deep learning training, e.g., training losses and gradients, to estimate the label uncertainty and select the representative instances. In particular, we model the problem of subset selection under uncertainty as a problem of finding a subset that closely approximates the gradient of the whole training data set derived on soft labels.
 
-  Despite their paramount significance, existing benchmarks for evaluating and supporting *table discovery* processes have been limited in scale and diversity, often constrained by small dataset sizes. They are not sufficient to systematically evaluate the effectiveness, scalability, and efficiency of various solutions.
+Our framework has three steps:
 
-  Deem consists of over 16 million real tables **–1,600X** larger than existing data lakes, from multiple sources, with an overall size larger than 1TB (**100X** larger). Deem contains both synthesized and real , in total more than 10 thousand  –**10X** more than existing benchmarks, for join and union search respectively. 
+<h>Mislabel</h> Detection. Deem identifies potential mislabels by observing the loss of each instance during training.
 
-🙌  With Deem, we thoroughly evaluate the state-of-the-art *table discovery* approaches on our benchmark and present our experimental findings from diverse perspectives, which we believe can push the research of *table discovery*.
+🙌  With Deem, we thoroughly evaluate the state-of-the-art *data cleaning* and *coreset selection* approaches on our datasets.
 
 ## 📧 Folder Structure
 
