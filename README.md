@@ -22,7 +22,16 @@
 
 Our framework has three steps:
 
-<h>Mislabel</h> Detection. Deem identifies potential mislabels by observing the loss of each instance during training.
+**Mislabel Detection.** Deem identifies potential mislabels by observing the loss of each instance during training.
+
+**Subset Selection.** Deem compute an upper bound of gradient approximation
+error (the smaller the error, the better the subset approximates the
+full dataset) considering the label uncertainty for deep learning
+over mislabeled instances and try to minimize the bound. 
+
+**Adaptive Subset Update.** Two factors trigger the update of the
+selected subset: the removal of mislabeled instances and significant
+gradient variations caused by iterative training. 
 
 🙌  With Deem, we thoroughly evaluate the state-of-the-art *data cleaning* and *coreset selection* approaches on our datasets.
 
