@@ -24,7 +24,7 @@ from dataset.Convertype import load_covertype_dataset, Convertype_train, Convert
     获取dataset(is_noise)的工具函数
 '''
 # split train and val dataset
-def classwise_split(dataset_targets, ratio, num_classes, coreset_size=0):
+def classwise_split(dataset_targets, ratio, num_classes):
     # select {ratio*len(labels)} images from the images
     train_val_label = np.array(dataset_targets)
     train_indexes = []
@@ -35,12 +35,7 @@ def classwise_split(dataset_targets, ratio, num_classes, coreset_size=0):
         # print(len(indexes))
         np.random.shuffle(indexes)
         train_num = int(len(indexes)*ratio)
-        if coreset_size == 0:
-            train_indexes.extend(indexes[:train_num])
-        else:
-            num = int(len(indexes)*ratio*coreset_size)
-            train_indexes.extend(indexes[:num])
-        val_indexes.extend(indexes[train_num:])
+        train_indexes.extend(indexes[:train_num])
 
     
     np.random.shuffle(train_indexes)
