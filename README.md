@@ -31,7 +31,7 @@ over mislabeled instances and try to minimize the bound.
 selected subset: the removal of mislabeled instances and significant
 gradient variations caused by iterative training. 
 
-🙌  With Deem, we thoroughly evaluate the state-of-the-art *data cleaning* and *coreset selection* approaches on our datasets.
+🙌  With Deem, we thoroughly evaluate the state-of-the-art *data cleaning* and *subset selection* approaches on our datasets.
 
 <span id="-struct"></span>
 ## 📧 Folder Structure
@@ -114,21 +114,21 @@ We explain some key parameters here.
 
 > Generating model.We provide different deep learning model for different datasets —— ResNet for image datasets and 3-layer perceptron for tabluar datasets.
 >
-> > --model [resnet/table]
+> > --model [image/table]
 
-For example, if you want to train image datasets, you can use `--gen resnet`.
+For example, if you want to train image datasets, you can use `--model image`.
 
 
-> Coreset Size. You should select coreset size for training, if coreset size is 1, we use full datasets to train.
+> Subset Size. You should select subset size for training, if subset size is 1, we use full datasets to train.
 >
-> > --s [0.0-1.0(float)]
+> > --K [0.0-1.0(float)]
 
-For example, if you want to select different coreset size, you can use `--s 0.1`.
+For example, if you want to select different subset size, you can use `--K 0.1`.
 
 
 > &tau; is a threshold for e'/e which can be added in train data, e.g, 0.3 .
 >
-> > --tau [tau]
+> > --tau [&tau;]
 
 For example, if you want to select 0.25 as your $\tau$ you can use `--tau 0.25`.
 
