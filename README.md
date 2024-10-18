@@ -18,13 +18,13 @@
 </div>
 <br>
 
-🌊  LakeBench is a large-scale benchmark designed to test the mettle of *table discovery* methods on a much larger scale, providing a more comprehensive and realistic evaluation platform for the field, including *finance, retail, manufacturing, energy, media, and more.*
+🌊  Deem is a large-scale benchmark designed to test the mettle of *table discovery* methods on a much larger scale, providing a more comprehensive and realistic evaluation platform for the field, including *finance, retail, manufacturing, energy, media, and more.*
 
   Despite their paramount significance, existing benchmarks for evaluating and supporting *table discovery* processes have been limited in scale and diversity, often constrained by small dataset sizes. They are not sufficient to systematically evaluate the effectiveness, scalability, and efficiency of various solutions.
 
-  LakeBench consists of over 16 million real tables **–1,600X** larger than existing data lakes, from multiple sources, with an overall size larger than 1TB (**100X** larger). LakeBench contains both synthesized and real queries, in total more than 10 thousand queries –**10X** more than existing benchmarks, for join and union search respectively. 
+  Deem consists of over 16 million real tables **–1,600X** larger than existing data lakes, from multiple sources, with an overall size larger than 1TB (**100X** larger). Deem contains both synthesized and real , in total more than 10 thousand  –**10X** more than existing benchmarks, for join and union search respectively. 
 
-🙌  With LakeBench, we thoroughly evaluate the state-of-the-art *table discovery* approaches on our benchmark and present our experimental findings from diverse perspectives, which we believe can push the research of *table discovery*.
+🙌  With Deem, we thoroughly evaluate the state-of-the-art *table discovery* approaches on our benchmark and present our experimental findings from diverse perspectives, which we believe can push the research of *table discovery*.
 
 ## 📧 Folder Structure
 
@@ -33,26 +33,23 @@
 ```
 .
 ├─── imgs                    # picture of different experiments
-├─── join                    # join algorithms                
-| ├─── Joise 
-| ├─── LSH
-| ├─── Pexeso         
-| └─── DeepJoin         
+├─── dataset                 # call and process the dataset                       
+| ├─── Cifar10.py 
+| ├─── Clothing1M.py
+| ├─── Covertype.py 
+| ├─── imdb.py 
+| ├─── Mnist.py 
+| └─── Svhn.py  
+|
+├─── model                   # different models for tabluar and image data                
+| ├─── image_model.py 
+| └─── table_model.py  
 | 
-├─── union                   # union algorithms                
-| ├─── TUS 
-| ├─── D3L
-| ├─── Santos         
-| └─── Starmie  
-| 
-├─── join&union              # join&union algorithms               
-| ├─── Joise 
-| ├─── LSH
-| ├─── Pexeso         
-| └─── DeepJoin 
-| 
+├─── parser                  # parsers of the algorithm              
+├─── main.py
 ├─── README.md
-└─── requirements.txt
+├─── requirements.txt
+└─── utils.py                # other utils code of algorithm
 ```
 
 <br>
@@ -63,16 +60,16 @@
 
 ## 🐳 Getting Started
 
-This is an example of how to set up LakeBench locally. To get a local copy up, running follow these simple example steps.
+This is an example of how to set up Deem locally. To get a local copy up, running follow these simple example steps.
 
 ### Prerequisites
 
-LakeBench is built on pytorch, with torchvision, torchaudio, and transformers.
+Deem is built on pytorch, with torchvision, torchaudio, and transformers.
 
 To install the required packages, you can create a conda environment:
 
 ```sh
-conda create --name lakebench python=3.
+conda create --name Deem python=3.8
 ```
 
 then use pip to install -r requirements.txt
@@ -81,19 +78,19 @@ then use pip to install -r requirements.txt
 pip install -r requirements.txt
 ```
 
-From now on, you can start use LakeBench by typing 
+From now on, you can start use Deem by typing 
 
 ```sh
-python test.py
+python main.py
 ```
 
 ### Prepare Datasets
 
-The detailed instructions for downloading and processing are shown in <a href = "#-table_dataset">table</a> below. Please follow it to download datasets/queries before running or developing algorithms.
+The detailed instructions for downloading and processing are shown in <a href = "#-table_dataset">table</a> below. Please follow it to download datasets before running or developing algorithms.
 
 <div id="-table_dataset"></div> 
 
-|                 Datasets                    | Queries | Ground Truth |
+|                 Datasets                    |  | Ground Truth |
 | :-----------------------------------------: | :-----------------------------------------: | :-----------------------------------------: |
 |        [WebTable](https://drive.google.com/file/d/1tnI2EyrYHlc3fpv0SSMoe2sqWQZoOEjg/view?usp=drive_link)     |  [WebTable_Union_Query](https://drive.google.com/file/d/16VHNC8vvs3pE5ldrWyQzOKe6VkYVcIP8/view?usp=drive_link)     |  [WebTable_Union_Groun_Truth](https://drive.google.com/file/d/1P0au83zifpAn23xwFlDMV9azTBY-GgZz/view?usp=drive_link)     | 
 |       [OpenData_SG](https://drive.google.com/file/d/1pPKMJ2Xnd6gYtkT_zVHIHCC97K5Yib4e/view?usp=drive_link)       |   [WebTable_Join_Query](https://drive.google.com/file/d/19YUPS2OsDQBmfR1ITtoKGvaIX4TO1pgg/view?usp=drive_link)       |    [WebTable_Join_Groun_Truth](https://drive.google.com/file/d/1wmh1qKRVGZ6zA4tEvwttnK9HdFpvbATs/view?usp=drive_link)       |  
@@ -104,10 +101,10 @@ The detailed instructions for downloading and processing are shown in <a href = 
 
 ## 🐠 Instruction
 
-LakeBench is easy to use and extend. Going through the bellowing examples will help you familiar with LakeBench for detailed instructions, evaluate an existing join/union algorithm on your own dataset, or developing new join/union algorithms.
+Deem is easy to use and extend. Going through the bellowing examples will help you familiar with Deem for detailed instructions, evaluate an existing join/union algorithm on your own dataset, or developing new join/union algorithms.
 
 ### Example
-Here is an example to run InfoGather. Running other supported algorithms (on other datasets with different queries) can be specified by the <a href = "#-table">table</a> below.
+Here is an example to run InfoGather. Running other supported algorithms (on other datasets with different ) can be specified by the <a href = "#-table">table</a> below.
 
 <div align= "center">
     <h1> InfoGather-Entity Augmentation and Attribute Discovery By Holistic Matching with Web Tables</h1>
