@@ -18,9 +18,7 @@
 </div>
 <br>
 
-🌊  This repo contains the codes for our submitted paper. Deem is a novel data-efficient framework that selects a subset of representative training instances under label uncertainty. The key idea is to leverage the metadata produced during deep learning training, e.g., training losses and gradients, to estimate the label uncertainty and select the representative instances. In particular, we model the problem of subset selection under uncertainty as a problem of finding a subset that closely approximates the gradient of the whole training data set derived on soft labels.
-
-Our framework has three steps:
+🌊  This repo contains the codes for our submitted paper. Deem is a novel data-efficient framework that selects a subset of representative training instances under label uncertainty. And it has three steps:
 
 **Mislabel Detection.** Deem identifies potential mislabels by observing the loss of each instance during training.
 
