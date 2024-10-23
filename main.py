@@ -32,7 +32,7 @@ import time
 
 def main():
     args = parser.parse_args()
-    if args.use_crust:
+    if args.use_deem:
         args.store_name = '_'.join([args.dataset, args.arch, args.mislabel_type, str(args.mislabel_ratio), str(args.fl_ratio), str(args.r), args.exp_str])
     else:
         args.store_name = '_'.join([args.dataset, args.arch, args.mislabel_type, str(args.mislabel_ratio), args.exp_str])
@@ -144,7 +144,7 @@ def main_worker(gpu, ngpus_per_node, args):
     weights = torch.FloatTensor(weights)
     for epoch in range(args.start_epoch, args.epochs):
         
-        if args.use_crust and epoch >= 5:
+        if args.use_deem and epoch >= 5:
             train_dataset.switch_data()         
             # FL part
             grads_all, labels = estimate_grads(trainval_loader, model, criterion, args, epoch, log_training)
@@ -172,7 +172,7 @@ def main_worker(gpu, ngpus_per_node, args):
             print("change train loader")
             
         # train for one epoch
-        if args.use_crust and epoch > 5:
+        if args.use_deem and epoch > 5:
             train(train_loader, model, criterion, weights, optimizer, epoch, args, log_training, tf_writer, fetch=True)
         else:
             train(train_loader, model, criterion, weights, optimizer, epoch, args, log_training, tf_writer, fetch=False)
