@@ -405,3 +405,66 @@ def accuracy(output, target, topk=(1,)):
             correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
             res.append(correct_k.mul_(100.0 / batch_size))
         return res
+    
+
+def deem_accuracy(logit, target, topk=(1,)):
+    """Computes the precision@k for the specified values of k"""
+    output = F.softmax(logit, dim=1)
+    maxk = max(topk)
+    batch_size = target.size(0)
+
+    _, pred = output.topk(maxk, 1, True, True)
+    pred = pred.t()
+    correct = pred.eq(target.view(1, -1).expand_as(pred))
+
+    res = []
+    for k in topk:
+        correct_k = correct[:k].reshape(-1).float().sum(0, keepdim=True)
+        res.append(correct_k.mul_(100.0 / batch_size))
+    return res
+
+def deem_train(train_loader, epoch, model, optimizer, criterion):
+    
+    train_total=0
+    train_correct=0
+    running_loss = 0.0
+
+    #other datasets
+    for i, (images, labels, _, _, _, indexes) in enumerate(train_loader):
+
+    # # colthing-1m
+    # for i, (images, labels) in enumerate(train_loader):  
+        images = Variable(images).cuda()
+        labels = Variable(labels).cuda()
+        
+        # Forward + Backward + Optimize
+        logits = model(images)
+        prec1, _ = accuracy(logits, labels, topk=(1, 5))
+        train_total+=1
+        train_correct+=prec1
+
+        loss = criterion(logits, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+        if i % 100 == 99:  # 每 100 个 batch 输出一次
+            print(f"[Epoch {epoch + 1}, Batch {i + 1}] Loss: {running_loss / 100:.4f}")
+            running_loss = 0.0
+
+def deem_evaluate(test_loader, model):
+    model.eval()    # Change model to "eval" mode.
+    correct1 = 0
+    total1 = 0
+    with torch.no_grad():
+        for images, labels in test_loader:
+            images = Variable(images).cuda()
+            logits1 = model(images)
+            outputs1 = F.softmax(logits1, dim=1)
+            _, pred1 = torch.max(outputs1.data, 1)
+            total1 += labels.size(0)
+            correct1 += (pred1.cpu() == labels).sum()
+
+ 
+    acc1 = 100*float(correct1)/float(total1)
+    return acc1

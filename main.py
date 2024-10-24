@@ -30,6 +30,8 @@ from model.image_model import *
 from model.table_model import *
 import time
 
+
+
 def main():
     args = parser.parse_args()
     if args.use_deem:
@@ -338,22 +340,67 @@ def estimate_grads(trainval_loader, model, criterion, args, epoch, log_training)
     log_training.write('epoch %d train acc: %f\n'%(epoch, top1.avg))
     return all_grads, all_targets
 
+def deem():
+    train_dataset, val_dataset, test_dataset, num_classes = get_noisy_dataset(args)
+    input_channel, forget_rate, args.top_bn, args.epoch_decay_start, args.n_epoch = get_dataset_params(args)
+    model = resnet32(input_channel=input_channel, n_outputs=num_classes)
+    model.cuda()
+    optimizer = optim.SDG(model.parameters(), lr=0.001)
+    criterion = nn.CrossEntropyLoss()  # 使用交叉熵损失
+    train_loader = DataLoader(train_dataset, batch_size=args.train_batch_size, drop_last=True, num_workers=args.num_workers, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=args.test_batch_size, drop_last=True, num_workers=args.num_workers, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=args.test_batch_size, drop_last=True, num_workers=args.num_workers, shuffle=False)
+    txtfile=save_path + dataset + ".txt"
+    start = time.time()
+    for epoch in range(0, args.n_epoch):
+        model.train()
+        train(train_loader, epoch, model, optimizer, criterion)
+        torch.cuda.empty_cache()
+        test_acc = evaluate(test_loader, model)
+        print("Epoch [%d/%d] Test Accuracy on the %s test images: Model %.4f %%" % (epoch+1, args.n_epoch, len(test_dataset), test_acc))
+
+        # with open(txtfile, "a") as myfile:
+            # myfile.write(str(datetime.now()) + ':' + str(int(epoch)) + ": " + str(test_acc) + "\n")
+    end = time.time()
+    # test_acc = evaluate(test_loader, model)
+    print(" %.4f s" % (end-start))
+    # with open(txtfile, "a") as myfile:
+        # myfile.write("Time: " + str(end-start) + "\n\n")
+
 # IMPORT MODELS FROM MODEL
 if __name__ == "__main__":
     parser = get_parser()
     args = parser.parse_args()
+    
+    train_dataset, val_dataset, test_dataset, num_classes = get_noisy_dataset(args)
+    input_channel, forget_rate, args.top_bn, args.epoch_decay_start, args.n_epoch = get_dataset_params(args)
+    model = resnet32(input_channel=input_channel, n_outputs=num_classes)
+    model.cuda()
+    optimizer = optim.SDG(model.parameters(), lr=0.001)
+    criterion = nn.CrossEntropyLoss()  # 使用交叉熵损失
+    train_loader = DataLoader(train_dataset, batch_size=args.train_batch_size, drop_last=True, num_workers=args.num_workers, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=args.test_batch_size, drop_last=True, num_workers=args.num_workers, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=args.test_batch_size, drop_last=True, num_workers=args.num_workers, shuffle=False)
+    start = time.time()
+    for epoch in range(0, args.n_epoch):
+        model.train()
+        deem_train(train_loader, epoch, model, optimizer, criterion)
+        torch.cuda.empty_cache()
+        test_acc = deem_evaluate(test_loader, model)
+        print("Epoch [%d/%d] Test Accuracy on the %s test images: Model %.4f %%" % (epoch+1, args.n_epoch, len(test_dataset), test_acc))
+
+        # with open(txtfile, "a") as myfile:
+            # myfile.write(str(datetime.now()) + ':' + str(int(epoch)) + ": " + str(test_acc) + "\n")
+    end = time.time()
+    # test_acc = evaluate(test_loader, model)
+    print(" %.4f s" % (end-start))
+    # with open(txtfile, "a") as myfile:
+        # myfile.write("Time: " + str(end-start) + "\n\n")
 
     # seed
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
-
-    # load dataset
-    train_dataset, val_dataset, test_dataset, num_classes = get_noisy_dataset(args)
-    
-    print(train_dataset[0])
-    # # load params
-    input_channel, forget_rate, args.top_bn, args.epoch_decay_start, args.n_epoch = get_dataset_params(args)
-    main()
+    # main()
 
     
     
