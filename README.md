@@ -123,7 +123,7 @@ All details of the public datasets we used in our work.
    (i) training the model with the original training dataset $D$ using soft labels, followed by  
    (ii) evaluating the model performance.
 
-5. For **Co-teaching**, we utilize the parameters as outlined in the original paper. In particular, both our method and **Co-teaching** set the mislabel ratio $\epsilon$ to the estimated mislabel ratio for fair comparison. Besides, at the $t$-th iteration, the selection ratio of small-loss instances is iteratively adjusted according to $1 - \epsilon \cdot \min\left(\frac{t}{10}, 1\right)$.  
+5. For **Co-teaching**, we utilize the parameters as outlined in the original paper. In particular, both our method and **Co-teaching** set the mislabel ratio $\epsilon$ to the estimated mislabel ratio for fair comparison. Besides, at the $t-th$ iteration, the selection ratio of small-loss instances is iteratively adjusted according to $1 - \epsilon \cdot \min\left(\frac{t}{10}, 1\right)$.  
     The pipeline includes:  
    (i) concurrently training two models, $f$ and $g$, on the initial training set. During each epoch $t$, **Co-teaching** identifies instances with comparatively low loss in model $f$, computes their loss using model $g$, and updates model parameters of $g$. Subsequently, it selects instances showing relatively low loss in model $g$, determines their loss on model $f$, and adjusts model parameters of $f$ until convergence, and  
    (ii) evaluating the model performance.
