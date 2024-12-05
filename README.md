@@ -106,40 +106,40 @@ All details of the public datasets we used in our work.
 ### Baselines
 
 1. For **HERDING**, the Euclidean distance metric is utilized to measure the feature difference between the initial training dataset $D$ and the selected subset $C$. The pipeline consists of:  
-   (i) pre-selecting subset $C$ based on feature distance,  
-   (ii) training the model on $S$ until convergence, and  
+   (i) pre-selecting subset $C$ based on feature distance;  
+   (ii) training the model on $S$ until convergence; 
    (iii) evaluating the model performance.
 
 2. For **GradMatch**, we utilize the same parameters as specified in its original paper. We set the number of selection intervals as 20. The pipeline is to:  
-   (i) train the initial model for 20 epochs using the entire training dataset,  
-   (ii) perform subset selection,  
-   (iii) train for another 20 epochs on the chosen subset,  
-   (iv) repeat steps (ii) and (iii) until convergence, and  
-   (v) finally evaluate the model performance.
+   (i) Train the initial model for 20 epochs using the entire training dataset;
+   (ii) Perform subset selection;
+   (iii) Train for another 20 epochs on the chosen subset;
+   (iv) Repeat steps (ii) and (iii) until convergence;
+   (v) Evaluate the model performance.
 
 3. For **DEEPFOOL**, we set the number of adversarial perturbations as 50, as described in its original paper. The pipeline is similar to **GradMatch**, and we also set the number of selection intervals as 20, the same as **GradMatch**.
 
 4. For **M-DYR-H**, we set the number of EM iterations as 10, as configured in the original study to fit the Beta Mixture Model. We set the warm-up epoch as 30. The pipeline involves:  
-   (i) training the model with the original training dataset $D$ using soft labels, followed by  
-   (ii) evaluating the model performance.
+   (i) Training the model with the original training dataset $D$ using soft labels; 
+   (ii) Evaluate the model performance.
 
 5. For **Co-teaching**, we utilize the parameters as outlined in the original paper. In particular, both our method and **Co-teaching** set the mislabel ratio $\epsilon$ to the estimated mislabel ratio for fair comparison. Besides, at the $t-th$ iteration, the selection ratio of small-loss instances is iteratively adjusted according to $1 - \epsilon \cdot \min\left(\frac{t}{10}, 1\right)$.  
     The pipeline includes:  
-   (i) concurrently training two models, $f$ and $g$, on the initial training set. During each epoch $t$, **Co-teaching** identifies instances with comparatively low loss in model $f$, computes their loss using model $g$, and updates model parameters of $g$. Subsequently, it selects instances showing relatively low loss in model $g$, determines their loss on model $f$, and adjusts model parameters of $f$ until convergence, and  
-   (ii) evaluating the model performance.
+   (i) Concurrently training two models, $f$ and $g$, on the initial training set. During each epoch $t$, **Co-teaching** identifies instances with comparatively low loss in model $f$, computes their loss using model $g$, and updates model parameters of $g$. Subsequently, it selects instances showing relatively low loss in model $g$, determines their loss on model $f$, and adjusts model parameters of $f$ until convergence; 
+   (ii) Evaluate the model performance.
 
 6. For **kNN**, we consider an instance to be likely mislabeled if more than half of its neighbors $k$ have labels different from its own. The pipeline involves:  
-   (i) employing **kNN** to identify and eliminate mislabeled instances from the initial training dataset,  
-   (ii) training the model on the filtered dataset until convergence, and  
-   (iii) evaluating the model performance.
+   (i) Employing **kNN** to identify and eliminate mislabeled instances from the initial training dataset;
+   (ii) Train the model on the filtered dataset until convergence;
+   (iii) Evaluate the model performance.
 
 7. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. We utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
    The pipeline of this baseline is the same as in **kNN**.
 
 8. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
-   (i) using **Cleanlab** to detect and remove mislabeled instances from the original training set,  
-   (ii) implementing **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence, and  
-   (iii) evaluating the model performance.
+   (i) Use **Cleanlab** to detect and remove mislabeled instances from the original training set;
+   (ii) Implement **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence;  
+   (iii) Evaluate the model performance.
 
 9. For **MisDetect**, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
 
