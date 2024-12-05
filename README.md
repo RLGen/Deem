@@ -107,13 +107,13 @@ All details of the public datasets we used in our work.
 
 1. For **HERDING**, the Euclidean distance metric is utilized to measure the feature difference between the initial training dataset $D$ and the selected subset $C$. The pipeline consists of:  
    (i) pre-selecting subset $C$ based on feature distance;  
-   (ii) training the model on $S$ until convergence; 
+   (ii) training the model on $S$ until convergence;   
    (iii) evaluating the model performance.
 
 2. For **GradMatch**, we utilize the same parameters as specified in its original paper. We set the number of selection intervals as 20. The pipeline is to:  
    (i) train the initial model for 20 epochs using the entire training dataset;  
    (ii) perform subset selection;  
-   (iii) train for another 20 epochs on the chosen subset;  
+   (iii) train for another 20 epochs on the chosen subset;    
    (iv) repeat steps (ii) and (iii) until convergence;  
    (v) finally evaluate the model performance.
 
