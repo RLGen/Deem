@@ -133,17 +133,22 @@ All details of the public datasets we used in our work.
    (ii) training the model on the filtered dataset until convergence;  
    (iii) evaluating the model performance.
 
-7. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. There is no need to set a threshold for filtering mislabeled data, as **Cleanlab** is capable of estimating the noise ratio using a probabilistic model. In our main experiment, we call the `find_label_issues` function at the end of early training (i.e., 10 epochs). While in the experiment of evaluating the mislabel detection accuracy of **Cleanlab**, we utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
+7. For **ActiveClean**, it does not require a threshold for mislabel filtering. We consider an instance to be likely mislabeled if more than half of its neighbors $k$ have labels different from its own. The pipeline involves:  
+   (i) employing **kNN** to identify and eliminate mislabeled instances from the initial training dataset;  
+   (ii) training the model on the filtered dataset until convergence;  
+   (iii) evaluating the model performance.
+
+8. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. There is no need to set a threshold for filtering mislabeled data, as **Cleanlab** is capable of estimating the noise ratio using a probabilistic model. In our main experiment, we call the `find_label_issues` function at the end of early training (i.e., 10 epochs). While in the experiment of evaluating the mislabel detection accuracy of **Cleanlab**, we utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
    The pipeline of this baseline is the same as in **kNN**.
 
-8. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
+9. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
    (i) using **Cleanlab** to detect and remove mislabeled instances from the original training set;    
    (ii) implementing **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence;   
    (iii) evaluating the model performance.
 
-9. For **MisDetect**, we use the estimated mislabel ratio as the threshold for mislabel filtering, as discussed in that paper. Moreover, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
+10. For **MisDetect**, we use the estimated mislabel ratio as the threshold for mislabel filtering, as discussed in that paper. Moreover, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
 
-10. For **Direct-Training**, we train the model on the training dataset directly until convergence.
+11. For **Direct-Training**, we train the model on the training dataset directly until convergence.
 
 ### The number of epochs of each Baselines
 | **HERDING** | **GradMatch** | **DEEPFOOL** | **M-DYR-H** | **Co-teaching** | **kNN** | **Cleanlab** | **Cleanlab-S** | **MisDetect** | **Direct-Training** | **ActiveClean** | **Deem** |
@@ -185,18 +190,37 @@ There are many other parameters and we have provided detailed clarification for 
 <span id="-result"></span>
 ##  🏆  Results
 
-### Effectiveness of Efficiency of Deem
+### Effectiveness of Deem
 
 Effectiveness of Deem and other algorithms:
 
 <div align="center">
 <img src="imgs/effectiveness.png" width="1000px">
 </div>
-<br>
+<be>
 
+    
+### Efficiency of Deem
 
 Efficiency of Deem and other algorithms:
 
 <div align="center">
 <img src="imgs/efficiency.png" width="1000px">
 </div>
+
+## Decomposed execution time of Deem
+
+(1) Initial model training for few epochs:
+| **CoverType** | **IMDB-Large** | **SVHN** | **MNIST** | **CIFAR-10** | **Clothing1M** |
+|:-------------:|:--------------:|:--------:|:---------:|:------------:|:--------------:|
+|               |                |          |           |              |                |
+
+(2) Subset select/update
+| **CoverType** | **IMDB-Large** | **SVHN** | **MNIST** | **CIFAR-10** | **Clothing1M** |
+|:-------------:|:--------------:|:--------:|:---------:|:------------:|:--------------:|
+|               |                |          |           |              |                |
+
+(3) Training for few more epochs after the subset selection
+| **CoverType** | **IMDB-Large** | **SVHN** | **MNIST** | **CIFAR-10** | **Clothing1M** |
+|:-------------:|:--------------:|:--------:|:---------:|:------------:|:--------------:|
+|               |                |          |           |              |                |
