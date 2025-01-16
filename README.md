@@ -150,10 +150,6 @@ All details of the public datasets we used in our work.
 
 11. For **Direct-Training**, we train the model on the training dataset directly until convergence.
 
-### The number of epochs of each Baselines
-| **HERDING** | **GradMatch** | **DEEPFOOL** | **M-DYR-H** | **Co-teaching** | **kNN** | **Cleanlab** | **Cleanlab-S** | **MisDetect** | **Direct-Training** | **ActiveClean** | **Deem** |
-|:-----------:|:-------------:|:------------:|:-----------:|:---------------:|:-------:|:------------:|:--------------:|:-------------:|:-------------------:|:---------------:|:--------:|
-|             |               |              |             |                 |         |              |                |               |                     |                 |          |
 
 
 <span id="-quickstart"></span>
@@ -207,20 +203,3 @@ Efficiency of Deem and other algorithms:
 <div align="center">
 <img src="imgs/efficiency.png" width="1000px">
 </div>
-
-## Decomposed execution time of Deem
-
-(1) Initial model training for few epochs:
-| **CoverType** | **IMDB-Large** | **SVHN** | **MNIST** | **CIFAR-10** | **Clothing1M** |
-|:-------------:|:--------------:|:--------:|:---------:|:------------:|:--------------:|
-|               |                |          |           |              |                |
-
-(2) Subset select/update
-| **CoverType** | **IMDB-Large** | **SVHN** | **MNIST** | **CIFAR-10** | **Clothing1M** |
-|:-------------:|:--------------:|:--------:|:---------:|:------------:|:--------------:|
-|               |                |          |           |              |                |
-
-(3) Training for few more epochs after the subset selection
-| **CoverType** | **IMDB-Large** | **SVHN** | **MNIST** | **CIFAR-10** | **Clothing1M** |
-|:-------------:|:--------------:|:--------:|:---------:|:------------:|:--------------:|
-|               |                |          |           |              |                |
