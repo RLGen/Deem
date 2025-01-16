@@ -133,22 +133,23 @@ All details of the public datasets we used in our work.
    (ii) training the model on the filtered dataset until convergence;  
    (iii) evaluating the model performance.
 
-7. For **ActiveClean**, it does not require a threshold for mislabel filtering. We consider an instance to be likely mislabeled if more than half of its neighbors $k$ have labels different from its own. The pipeline involves:  
-   (i) employing **kNN** to identify and eliminate mislabeled instances from the initial training dataset;  
-   (ii) training the model on the filtered dataset until convergence;  
-   (iii) evaluating the model performance.
+7. For **ActiveClean**, we use the estimated mislabel ratio as the input budget and set the sample batch size to 50 in each iteration. The pipeline involves:  
+   (i) initial model parameters using the initial training set;  
+   (ii) select a batch of data that is likely to be mislabeled;  
+   (iii) detect and remove the mislabeled data within the selected data batch;
+   (iv) update the model using the already refined data until convergence. 
 
-8. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. There is no need to set a threshold for filtering mislabeled data, as **Cleanlab** is capable of estimating the noise ratio using a probabilistic model. In our main experiment, we call the `find_label_issues` function at the end of early training (i.e., 10 epochs). While in the experiment of evaluating the mislabel detection accuracy of **Cleanlab**, we utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
+9. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. There is no need to set a threshold for filtering mislabeled data, as **Cleanlab** is capable of estimating the noise ratio using a probabilistic model. In our main experiment, we call the `find_label_issues` function at the end of early training (i.e., 10 epochs). While in the experiment of evaluating the mislabel detection accuracy of **Cleanlab**, we utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
    The pipeline of this baseline is the same as in **kNN**.
 
-9. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
+10. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
    (i) using **Cleanlab** to detect and remove mislabeled instances from the original training set;    
    (ii) implementing **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence;   
    (iii) evaluating the model performance.
 
-10. For **MisDetect**, we use the estimated mislabel ratio as the threshold for mislabel filtering, as discussed in that paper. Moreover, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
+11. For **MisDetect**, we use the estimated mislabel ratio as the threshold for mislabel filtering, as discussed in that paper. Moreover, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
 
-11. For **Direct-Training**, we train the model on the training dataset directly until convergence.
+12. For **Direct-Training**, we train the model on the training dataset directly until convergence.
 
 
 
