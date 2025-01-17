@@ -137,6 +137,7 @@ All details of the public datasets we used in our work.
    (i) initial model parameters using the initial training set;  
    (ii) select a batch of data that is likely to be mislabeled;  
    (iii) detect and remove the mislabeled data within the selected data batch using MisDetect (the state-of-the-art in mislabel detection);
+   
    (iv) update the model using the already refined data until convergence. 
 
 9. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. There is no need to set a threshold for filtering mislabeled data, as **Cleanlab** is capable of estimating the noise ratio using a probabilistic model. In our main experiment, we call the `find_label_issues` function at the end of early training (i.e., 10 epochs). While in the experiment of evaluating the mislabel detection accuracy of **Cleanlab**, we utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
