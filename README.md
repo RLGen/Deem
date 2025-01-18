@@ -144,9 +144,9 @@ All details of the public datasets we used in our work.
    The pipeline of this baseline is the same as in **kNN**.
 
 10. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
-   (i) using **Cleanlab** to detect and remove mislabeled instances from the original training set;    
-   (ii) implementing **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence;   
-   (iii) evaluating the model performance.
+      (i) using **Cleanlab** to detect and remove mislabeled instances from the original training set;    
+      (ii) implementing **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence;   
+      (iii) evaluating the model performance.
 
 11. For **MisDetect**, we use the estimated mislabel ratio as the threshold for mislabel filtering, as discussed in that paper. Moreover, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
 
@@ -193,15 +193,18 @@ There are many other parameters and we have provided detailed clarification for 
 Effectiveness of Deem and other algorithms:
 
 <div align="center">
-<img src="imgs/effectiveness.png" width="1000px">
+<img src="imgs/effectiveness.pdf" width="1000px">
 </div>
+
+
 <be>
 
-    
+
 ### Efficiency of Deem
 
 Efficiency of Deem and other algorithms:
 
 <div align="center">
-<img src="imgs/efficiency.png" width="1000px">
+<img src="imgs/efficiency.pdf" width="1000px">
 </div>
+
