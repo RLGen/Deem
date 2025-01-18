@@ -193,8 +193,9 @@ There are many other parameters and we have provided detailed clarification for 
 Effectiveness of Deem and other algorithms:
 
 <div align="center">
-<img src="imgs/effectiveness.pdf" width="1000px">
+<img src="imgs/effectiveness.png" width="1000px">
 </div>
+
 
 
 <be>
@@ -205,6 +206,6 @@ Effectiveness of Deem and other algorithms:
 Efficiency of Deem and other algorithms:
 
 <div align="center">
-<img src="imgs/efficiency.pdf" width="1000px">
+<img src="imgs/efficiency.png" width="1000px">
 </div>
 
