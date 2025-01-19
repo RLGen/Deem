@@ -128,22 +128,30 @@ All details of the public datasets we used in our work.
    (i) concurrently training two models, $f$ and $g$, on the initial training set. During each epoch $t$, **Co-teaching** identifies instances with comparatively low loss in model $f$, computes their loss using model $g$, and updates model parameters of $g$. Subsequently, it selects instances showing relatively low loss in model $g$, determines their loss on model $f$, and adjusts model parameters of $f$ until convergence;    
    (ii) evaluating the model performance.
 
-6. For **kNN**, we consider an instance to be likely mislabeled if more than half of its neighbors $k$ have labels different from its own. The pipeline involves:  
+6. For **kNN**, it does not require a threshold for mislabel filtering. We consider an instance to be likely mislabeled if more than half of its neighbors $k$ have labels different from its own. The pipeline involves:  
    (i) employing **kNN** to identify and eliminate mislabeled instances from the initial training dataset;  
    (ii) training the model on the filtered dataset until convergence;  
    (iii) evaluating the model performance.
 
-7. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. We utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
+7. For **ActiveClean**, we use the estimated mislabel ratio as the input budget and utilize the default sample size (identical to that specified in the paper) in each iteration. The pipeline involves:  
+   (i) initial model parameters using the initial training set;  
+   (ii) select a batch of data that is likely to be mislabeled;  
+   (iii) detect and remove the mislabeled data within the selected data batch using MisDetect (the state-of-the-art in mislabel detection);
+   
+   (iv) update the model using the already refined data until convergence. 
+
+9. For **Cleanlab**, the input necessitates a training dataset $D$ alongside a probability matrix. There is no need to set a threshold for filtering mislabeled data, as **Cleanlab** is capable of estimating the noise ratio using a probabilistic model. In our main experiment, we call the `find_label_issues` function at the end of early training (i.e., 10 epochs). While in the experiment of evaluating the mislabel detection accuracy of **Cleanlab**, we utilize 10-fold cross-validation to obtain the probability matrix. Then, we call the `find_label_issues` function to identify mislabels based on confidence.  
    The pipeline of this baseline is the same as in **kNN**.
 
-8. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
-   (i) using **Cleanlab** to detect and remove mislabeled instances from the original training set;    
-   (ii) implementing **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence;   
-   (iii) evaluating the model performance.
+10. For **Cleanlab-S**, we use the same parameters as **Cleanlab**. However, the pipeline is slightly different:  
+      (i) using **Cleanlab** to detect and remove mislabeled instances from the original training set;    
+      (ii) implementing **GradMatch** to choose a subset from the dataset after removal for model training, and training until convergence;   
+      (iii) evaluating the model performance.
 
-9. For **MisDetect**, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
+11. For **MisDetect**, we use the estimated mislabel ratio as the threshold for mislabel filtering, as discussed in that paper. Moreover, we set the percentage of instances removed per iteration as the estimated mislabel ratio divided by 5, the same as the original paper. Besides, the size of the clean pool is set to 10% of the training set. The overall pipeline of **MisDetect** is the same as **kNN**.
 
-10. For **Direct-Training**, we train the model on the training dataset directly until convergence.
+12. For **Direct-Training**, we train the model on the training dataset directly until convergence.
+
 
 
 <span id="-quickstart"></span>
@@ -154,21 +162,21 @@ Different experiments can be conducted by passing different parameters to `main.
 We explain some key parameters here.
 
 
-> Generating model.We provide different deep learning model for different datasets —— ResNet for image datasets and 3-layer perceptron for tabluar datasets.
+> Generating model. We provide different deep learning models for different datasets —— ResNet for image datasets and 3-layer perceptron for tabular datasets.
 >
 > > --model [image/table]
 
 For example, if you want to train image datasets, you can use `--model image`.
 
 
-> Subset Size. You should select subset size for training, if subset size is 1, we use full datasets to train.
+> Subset Size. You should select the subset size for training, if the subset size is 1, we use full datasets to train.
 >
 > > --K [0.0-1.0(float)]
 
-For example, if you want to select different subset size, you can use `--K 0.1`.
+For example, if you want to select different subset sizes, you can use `--K 0.1`.
 
 
-> &tau; is a threshold for e'/e which can be added in train data, e.g, 0.3 .
+> &tau; is a threshold for e'/e which can be added in train data, e.g., 0.3.
 >
 > > --tau [&tau;]
 
@@ -180,18 +188,24 @@ There are many other parameters and we have provided detailed clarification for 
 <span id="-result"></span>
 ##  🏆  Results
 
-### Effectiveness of Efficiency of Deem
+### Effectiveness of Deem
 
 Effectiveness of Deem and other algorithms:
 
 <div align="center">
 <img src="imgs/effectiveness.png" width="1000px">
 </div>
-<br>
 
+
+
+<be>
+
+
+### Efficiency of Deem
 
 Efficiency of Deem and other algorithms:
 
 <div align="center">
 <img src="imgs/efficiency.png" width="1000px">
 </div>
+
